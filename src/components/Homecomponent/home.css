@@ -1,0 +1,74 @@
+.home-main-container {
+  background-color: rgba(0, 0, 0, 0.912);
+  height: 100vh;
+}
+
+.name-date-container {
+  width: 100%;
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.name-date-container p {
+  font-size: 20px;
+}
+
+.current-month-container {
+  padding: 20px;
+  color: gray;
+  font-size: 20px;
+  color: gray;
+}
+
+.gain-loss-container {
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: center;
+  gap: 20rem;
+}
+
+.spend-button {
+  background-color: rgba(255, 0, 0, 0.474);
+  width: 150px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.spend-button:hover {
+  background-color: rgba(255, 0, 0, 0.264);
+}
+
+.spend-button p {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.income-button {
+  background-color: rgba(3, 149, 3, 0.409);
+  width: 150px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.income-button:hover {
+  background-color: rgba(3, 149, 3, 0.229);
+}
+
+.income-button p {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.plus-icon {
+  width: 90px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.plus-icon:hover {
+  transform: scale(1.5);
+}
