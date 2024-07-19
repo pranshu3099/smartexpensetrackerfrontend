@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import plus from "../../icons/plus-square-svgrepo-com.svg";
 import "./home.css";
 import { useDisclosure } from "@chakra-ui/react";
-
+import down from "../../icons/arrow-bottom-icon.svg";
+import up from "../../icons/arrow-top-icon.svg";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [openModal, setOpenModal] = useState(false);
@@ -30,29 +31,33 @@ const Home = () => {
           <p>{getTimeofDay()} </p>
           <h2>{userData?.name}</h2>
         </div>
-
-        {/* <div className="current-month-container">
-          <p>This Month</p>
-        </div> */}
         <div className="gain-loss-container">
-          <button className="spend-button">
-            <p>Spending</p>
-            <p>2.5</p>
-          </button>
+          <div className="gain-loss-sub-container">
+            <img src={down} alt="" style={{ width: "80px" }} />
+            <div className="spend-data">
+              <p>Spending</p>
+              <p>2.5</p>
+            </div>
+          </div>
           <img
             src={plus}
             alt=""
             className="plus-icon"
             onClick={handleopenModal}
           />
-          <button className="income-button">
-            <p>Income</p>
-            <p>2.5</p>
-          </button>
+          <div className="gain-loss-sub-container">
+            <img src={up} alt="" style={{ width: "80px" }} />
+            <div className="gain-data">
+              <p>Income</p>
+              <p>2.5</p>
+            </div>
+          </div>
         </div>
-        {openModal && (
-          <Transaction isOpen={setOpenModal} setOpenModal={setOpenModal} />
-        )}
+        <div className="transaction">
+          {openModal && (
+            <Transaction isOpen={openModal} setOpenModal={setOpenModal} />
+          )}
+        </div>
       </div>
     </>
   );

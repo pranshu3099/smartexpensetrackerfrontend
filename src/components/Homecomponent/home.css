@@ -15,52 +15,38 @@
   font-size: 20px;
 }
 
-.current-month-container {
-  padding: 20px;
-  color: gray;
-  font-size: 20px;
-  color: gray;
-}
-
 .gain-loss-container {
-  /* background-color: aqua; */
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 20vh;
+}
+
+.gain-loss-sub-container {
+  display: flex;
+  gap: 2rem;
+  width: 500px;
+  align-items: center;
+  color: white;
+  font-size: 30px;
   justify-content: center;
-  gap: 20rem;
 }
 
-.spend-button {
-  background-color: rgba(255, 0, 0, 0.474);
-  width: 150px;
-  border-radius: 30px;
+.gain-loss-sub-container img {
+  transition: 0.5s all ease-in-out;
   cursor: pointer;
-  transition: all 0.5s ease-in-out;
 }
 
-.spend-button:hover {
-  background-color: rgba(255, 0, 0, 0.264);
+.gain-loss-sub-container img:hover {
+  transform: scale(1.5);
 }
 
-.spend-button p {
-  color: white;
-  font-family: "Courier New", Courier, monospace;
+.spend-data {
+  color: red;
 }
 
-.income-button {
-  background-color: rgba(3, 149, 3, 0.409);
-  width: 150px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
-}
-
-.income-button:hover {
-  background-color: rgba(3, 149, 3, 0.229);
-}
-
-.income-button p {
-  color: white;
-  font-family: "Courier New", Courier, monospace;
+.gain-data {
+  color: green;
 }
 
 .plus-icon {
