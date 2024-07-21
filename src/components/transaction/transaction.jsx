@@ -204,7 +204,7 @@ const Transaction = ({ isOpen, onClose, onOpen, setOpenModal }) => {
                   </div>{" "}
                   <div className="category-icon-sub-container">
                     <img src={shopping} alt="" />
-                    <p>shopping</p>
+                    <p>Shopping</p>
                   </div>
                   <div className="category-icon-sub-container">
                     <img src={foodanddining} alt="" />

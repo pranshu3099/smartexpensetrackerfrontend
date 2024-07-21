@@ -1,14 +1,33 @@
 import { authmethod, userData, bearer } from "../../utils/utils";
 import Transaction from "../transaction/transaction";
+import RecentTransaction from "../transaction/RecentTransaction";
 import { useEffect, useState } from "react";
 import plus from "../../icons/plus-square-svgrepo-com.svg";
 import "./home.css";
-import { useDisclosure } from "@chakra-ui/react";
 import down from "../../icons/arrow-bottom-icon.svg";
 import up from "../../icons/arrow-top-icon.svg";
+import axios from "axios";
+const react_api_url = import.meta.env.VITE_REACT_APP_API_URL;
 const Home = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [openModal, setOpenModal] = useState(false);
+  const [yourTransaction, SetyourTransaction] = useState([]);
+  useEffect(() => {
+    try {
+      axios
+        .get(`${react_api_url}/v1/user/getexpensedata/${userData.email}`)
+        .then((response) => {
+          if (response.status === 200) {
+            SetyourTransaction(response?.data?.getData);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   const getTimeofDay = () => {
     const now = new Date();
     const hours = now.getHours();
@@ -58,6 +77,7 @@ const Home = () => {
             <Transaction isOpen={openModal} setOpenModal={setOpenModal} />
           )}
         </div>
+        <RecentTransaction yourTransaction={yourTransaction} />
       </div>
     </>
   );

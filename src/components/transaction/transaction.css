@@ -64,3 +64,37 @@
 .message-container p {
   font-size: 30px;
 }
+
+.recent-transaction-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 20px;
+  margin-top: 25px;
+  background-color: rgba(0, 255, 255, 0.078);
+}
+
+.recent-transaction-container p {
+  font-size: 20px;
+  color: gray;
+}
+
+.recent-transaction-container button {
+  width: 120px;
+}
+
+.recent-transaction-sub-container {
+  /* background-color: aqua; */
+  height: 100vh;
+}
+
+.transaction-data-container {
+  background-color: white;
+  height: 10vh;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 500px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.539);
+  cursor: pointer;
+}
