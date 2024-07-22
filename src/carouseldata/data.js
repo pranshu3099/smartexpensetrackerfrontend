@@ -65,4 +65,16 @@ export const imageData = [
     category: "FoodandDining",
     src: "/src/icons/food-and-drink-svgrepo-com.svg",
   },
+
+  {
+    id: "11",
+    category: "online",
+    src: "/src/icons/alipay-svgrepo-com.svg",
+  },
+
+  {
+    id: "12",
+    category: "cash",
+    src: "/src/icons/cash-svgrepo-com.svg",
+  },
 ];
