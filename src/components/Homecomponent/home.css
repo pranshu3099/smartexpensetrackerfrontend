@@ -58,3 +58,16 @@
 .plus-icon:hover {
   transform: scale(1.5);
 }
+
+.recent-transaction {
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 70px;
+  padding: 20px;
+}
+
+.recent-transaction p {
+  font-size: 20px;
+}
