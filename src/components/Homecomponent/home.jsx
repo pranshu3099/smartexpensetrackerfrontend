@@ -6,27 +6,25 @@ import plus from "../../icons/plus-square-svgrepo-com.svg";
 import "./home.css";
 import down from "../../icons/arrow-bottom-icon.svg";
 import up from "../../icons/arrow-top-icon.svg";
-import axios from "axios";
-const react_api_url = import.meta.env.VITE_REACT_APP_API_URL;
+import getExpenseData from "../../customhook/useCommonEffect";
+import AllTransaction from "../transaction/AllTransaction";
+import { useDisclosure } from "@chakra-ui/react";
+import { Modal, Button } from "@chakra-ui/react";
 const Home = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [AllTransactionModal, setAllTransactionModal] = useState(false);
   const [yourTransaction, SetyourTransaction] = useState([]);
   useEffect(() => {
-    try {
-      axios
-        .get(`${react_api_url}/v1/user/getexpensedata/${userData.email}`)
-        .then((response) => {
-          if (response.status === 200) {
-            SetyourTransaction(response?.data?.getData);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+    const fetchData = async () => {
+      try {
+        const data = await getExpenseData(userData?.email);
+        SetyourTransaction(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [userData?.email]);
 
   const getTimeofDay = () => {
     const now = new Date();
@@ -40,7 +38,12 @@ const Home = () => {
   };
 
   const handleopenModal = () => {
-    setOpenModal(true);
+    onOpen();
+  };
+
+  const handleSeeAllTransactionModal = () => {
+    onOpen();
+    setAllTransactionModal(true);
   };
 
   return (
@@ -72,9 +75,34 @@ const Home = () => {
             </div>
           </div>
         </div>
+
         <div className="transaction">
-          {openModal && (
-            <Transaction isOpen={openModal} setOpenModal={setOpenModal} />
+          {!AllTransactionModal && (
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <Transaction onClose={onClose} />
+            </Modal>
+          )}
+        </div>
+        <div className="recent-transaction">
+          <p style={{ color: "black" }}>Recent Transaction</p>
+          <Button
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100px",
+              padding: "20px",
+            }}
+            onClick={handleSeeAllTransactionModal}
+          >
+            See All
+          </Button>
+          {AllTransactionModal && (
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <AllTransaction
+                onClose={onClose}
+                setAllTransactionModal={setAllTransactionModal}
+              />
+            </Modal>
           )}
         </div>
         <RecentTransaction yourTransaction={yourTransaction} />
