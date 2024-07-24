@@ -77,4 +77,22 @@ export const imageData = [
     category: "cash",
     src: "/src/icons/cash-svgrepo-com.svg",
   },
+
+  {
+    id: "13",
+    category: "time",
+    src: "/src/icons/on-time-icon.svg",
+  },
+
+  {
+    id: "14",
+    category: "date",
+    src: "/src/icons/booking-confirmed-icon.svg",
+  },
+
+  {
+    id: "15",
+    category: "rupees",
+    src: "/src/icons/indian-rupee-coin-color-icon.svg",
+  },
 ];
