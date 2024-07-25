@@ -27,11 +27,7 @@ import { authmethod, userData, bearer } from "../../utils/utils";
 import { css } from "@emotion/react";
 const react_api_url = import.meta.env.VITE_REACT_APP_API_URL;
 import axios from "axios";
-const Transaction = ({ isOpen, onClose, onOpen, setOpenModal }) => {
-  const closeModal = () => {
-    setOpenModal(false);
-  };
-
+const Transaction = ({ onClose }) => {
   const TransactionReducer = (state, action) => {
     switch (action?.type) {
       case "amount":
@@ -78,7 +74,6 @@ const Transaction = ({ isOpen, onClose, onOpen, setOpenModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
     const info = {
       amount: state.amount,
       category: state.category,
@@ -86,7 +81,7 @@ const Transaction = ({ isOpen, onClose, onOpen, setOpenModal }) => {
       message: state.your_message,
     };
     if (checkRequiredFields(info)) {
-      const payment_mode = state?.payment_mode === "1" ? "Online" : "Cash";
+      const payment_mode = state?.payment_mode === "1" ? "online" : "cash";
       const data = {
         ...info,
         payment_mode: payment_mode,
@@ -128,154 +123,151 @@ const Transaction = ({ isOpen, onClose, onOpen, setOpenModal }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen}>
-        <ModalOverlay />
-        <ModalContent
-          bg="rgba(0, 0, 0, 0.912)"
-          height="800px"
-          className="transaction-modal-container"
-          css={customScrollbar}
-        >
-          <ModalBody>
-            <div className="transaction-main-container">
-              <h1 className="heading-container">Add Transaction</h1>
-              <Input
-                type="number"
-                value={state?.amount}
-                placeholder="Amount"
-                style={{ color: "white" }}
-                onChange={(e) => {
+      <ModalOverlay />
+      <ModalContent
+        bg="rgba(0, 0, 0, 0.912)"
+        height="800px"
+        css={customScrollbar}
+      >
+        <ModalBody>
+          <div className="transaction-main-container">
+            <h1 className="heading-container">Add Transaction</h1>
+            <Input
+              type="number"
+              value={state?.amount}
+              placeholder="Amount"
+              style={{ color: "white" }}
+              onChange={(e) => {
+                dispatch({
+                  ...state,
+                  amount: e.target.value,
+                  type: "amount",
+                });
+              }}
+            ></Input>
+            <div className="login-error-container">
+              {requiredFields.amount && (
+                <p style={{ color: "red" }}> Amount field is required</p>
+              )}
+            </div>
+            <div className="category-container">
+              <p className="category-heading">Category</p>
+              <div
+                className="category-icon-container"
+                onClick={(e) => {
+                  const category = getCategory(e.target, lastTag, setLastTag);
                   dispatch({
                     ...state,
-                    amount: e.target.value,
-                    type: "amount",
+                    category,
+                    type: "category",
                   });
                 }}
-              ></Input>
-              <div className="login-error-container">
-                {requiredFields.amount && (
-                  <p style={{ color: "red" }}> Amount field is required</p>
-                )}
-              </div>
-              <div className="category-container">
-                <p className="category-heading">Category</p>
-                <div
-                  className="category-icon-container"
-                  onClick={(e) => {
-                    const category = getCategory(e.target, lastTag, setLastTag);
-                    dispatch({
-                      ...state,
-                      category,
-                      type: "category",
-                    });
-                  }}
-                >
-                  <div className="category-icon-sub-container">
-                    <img src={investment} alt="" />
-                    <p>Investment</p>
-                  </div>
-                  <div className="category-icon-sub-container">
-                    <img src={taxes} alt="" />
-                    <p>Taxes</p>
-                  </div>
-                  <div className="category-icon-sub-container">
-                    <img src={rent} alt="" />
-                    <p>Rent</p>
-                  </div>
-                  <div className="category-icon-sub-container">
-                    <img src={gifts} alt="" />
-                    <p>Gifts</p>
-                  </div>{" "}
-                  <div className="category-icon-sub-container">
-                    <img src={education} alt="" />
-                    <p>Eduction</p>
-                  </div>{" "}
-                  <div className="category-icon-sub-container">
-                    <img src={medical} alt="" />
-                    <p>Medical</p>
-                  </div>{" "}
-                  <div className="category-icon-sub-container">
-                    <img src={travel} alt="" />
-                    <p>Travelling</p>
-                  </div>{" "}
-                  <div className="category-icon-sub-container">
-                    <img src={entertainment} alt="" />
-                    <p>Entertainment</p>
-                  </div>{" "}
-                  <div className="category-icon-sub-container">
-                    <img src={shopping} alt="" />
-                    <p>Shopping</p>
-                  </div>
-                  <div className="category-icon-sub-container">
-                    <img src={foodanddining} alt="" />
-                    <p>FoodandDining</p>
-                  </div>
+              >
+                <div className="category-icon-sub-container">
+                  <img src={investment} alt="" />
+                  <p>Investment</p>
+                </div>
+                <div className="category-icon-sub-container">
+                  <img src={taxes} alt="" />
+                  <p>Taxes</p>
+                </div>
+                <div className="category-icon-sub-container">
+                  <img src={rent} alt="" />
+                  <p>Rent</p>
+                </div>
+                <div className="category-icon-sub-container">
+                  <img src={gifts} alt="" />
+                  <p>Gifts</p>
+                </div>{" "}
+                <div className="category-icon-sub-container">
+                  <img src={education} alt="" />
+                  <p>Eduction</p>
+                </div>{" "}
+                <div className="category-icon-sub-container">
+                  <img src={medical} alt="" />
+                  <p>Medical</p>
+                </div>{" "}
+                <div className="category-icon-sub-container">
+                  <img src={travel} alt="" />
+                  <p>Travelling</p>
+                </div>{" "}
+                <div className="category-icon-sub-container">
+                  <img src={entertainment} alt="" />
+                  <p>Entertainment</p>
+                </div>{" "}
+                <div className="category-icon-sub-container">
+                  <img src={shopping} alt="" />
+                  <p>Shopping</p>
+                </div>
+                <div className="category-icon-sub-container">
+                  <img src={foodanddining} alt="" />
+                  <p>FoodandDining</p>
                 </div>
               </div>
-              <div className="login-error-container">
-                {requiredFields.category && (
-                  <p style={{ color: "red" }}> Category field is required</p>
-                )}
-              </div>
-              <div className="payment-method-container">
-                <p>Payment Method</p>
-                <RadioGroup>
-                  <Stack
-                    direction="row"
-                    onChange={(e) => {
-                      dispatch({
-                        ...state,
-                        payment_mode: e.target.value,
-                        type: "payment",
-                      });
-                    }}
-                  >
-                    <Radio value="1">Online</Radio>
-                    <Radio value="2">Cash</Radio>
-                  </Stack>
-                </RadioGroup>
-              </div>
-              <div className="login-error-container">
-                {requiredFields.payment_mode && (
-                  <p style={{ color: "red" }}> Payment field is required</p>
-                )}
-              </div>
-              <div className="message-container">
-                <p>Your short message</p>
-                <Textarea
-                  placeholder="your message"
-                  size="sm"
-                  value={state.your_message}
+            </div>
+            <div className="login-error-container">
+              {requiredFields.category && (
+                <p style={{ color: "red" }}> Category field is required</p>
+              )}
+            </div>
+            <div className="payment-method-container">
+              <p>Payment Method</p>
+              <RadioGroup>
+                <Stack
+                  direction="row"
                   onChange={(e) => {
                     dispatch({
                       ...state,
-                      your_message: e.target.value,
-                      type: "message",
+                      payment_mode: e.target.value,
+                      type: "payment",
                     });
                   }}
-                />
-              </div>
-              <div className="login-error-container">
-                {requiredFields.message && (
-                  <p style={{ color: "red" }}> message field is required</p>
-                )}
-              </div>
+                >
+                  <Radio value="1">Online</Radio>
+                  <Radio value="2">Cash</Radio>
+                </Stack>
+              </RadioGroup>
             </div>
-            <div style={{ marginTop: "16px" }}>
-              <Button colorScheme="blue" mr={3} onClick={closeModal}>
-                Close
-              </Button>
-              <Button
-                variant="ghost"
-                backgroundColor={"white"}
-                onClick={handleSubmit}
-              >
-                Add
-              </Button>
+            <div className="login-error-container">
+              {requiredFields.payment_mode && (
+                <p style={{ color: "red" }}> Payment field is required</p>
+              )}
             </div>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            <div className="message-container">
+              <p>Your short message</p>
+              <Textarea
+                placeholder="your message"
+                size="sm"
+                value={state.your_message}
+                onChange={(e) => {
+                  dispatch({
+                    ...state,
+                    your_message: e.target.value,
+                    type: "message",
+                  });
+                }}
+              />
+            </div>
+            <div className="login-error-container">
+              {requiredFields.message && (
+                <p style={{ color: "red" }}> message field is required</p>
+              )}
+            </div>
+          </div>
+          <div style={{ marginTop: "16px" }}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              variant="ghost"
+              backgroundColor={"white"}
+              onClick={handleSubmit}
+            >
+              Add
+            </Button>
+          </div>
+        </ModalBody>
+      </ModalContent>
     </>
   );
 };
