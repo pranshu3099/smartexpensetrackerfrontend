@@ -105,7 +105,9 @@ const Home = () => {
             </Modal>
           )}
         </div>
-        <RecentTransaction yourTransaction={yourTransaction} />
+        {yourTransaction.length ? (
+          <RecentTransaction yourTransaction={yourTransaction} />
+        ) : null}
       </div>
     </>
   );
