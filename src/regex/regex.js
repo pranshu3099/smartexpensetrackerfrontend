@@ -9,3 +9,6 @@ export const nameValidate = (name) => {
 export const emailValidate = (text) => {
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text);
 };
+export const incomeValidate = (income) => {
+  return /^-?\d+$/.test(income);
+};
