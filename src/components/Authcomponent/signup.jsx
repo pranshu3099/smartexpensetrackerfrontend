@@ -9,10 +9,13 @@ import hidden from "../../icons/eye-slash-svgrepo-com.svg";
 import email from "../../icons/mail-svgrepo-com.svg";
 import eye from "../../icons/eye-svgrepo-com.svg";
 import user from "../../icons/person-svgrepo-com.svg";
+import rupees from "../../icons/rupee-svgrepo-com.svg";
+
 import {
   nameValidate,
   passwordValidate,
   emailValidate,
+  incomeValidate,
 } from "../../regex/regex";
 
 import { Navigate } from "react-router-dom";
@@ -59,6 +62,20 @@ const Signup = () => {
           password: action.password,
           passwordValidation: false,
         };
+      case "income":
+        if (!incomeValidate(action.income)) {
+          return {
+            ...state,
+            income: action.income,
+            incomeValidation: action.incomeValidation,
+          };
+        }
+
+        return {
+          ...state,
+          income: action.income,
+          incomeValidation: false,
+        };
       default:
         throw new Error("type not matched");
     }
@@ -100,6 +117,7 @@ const Signup = () => {
       name: state.name,
       email: state.email,
       password: state.password,
+      income_per_month: state.income,
     };
 
     if (checkRequiredFields(info)) {
@@ -131,9 +149,11 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
+    income: "",
     nameValidation: false,
     emailValidation: false,
     passwordValidation: false,
+    incomeValidation: false,
   });
   const path = "smartexpensetracker/home";
   return (
@@ -252,6 +272,40 @@ const Signup = () => {
                 </p>
               )}
             </div>
+
+            <div className="signup-input-sub-container">
+              <Input
+                variant="flushed"
+                placeholder="income per month"
+                type="text"
+                name="income"
+                ref={InputRef}
+                onChange={(e) => {
+                  dispatch({
+                    ...state,
+                    income: e.target.value,
+                    type: "income",
+                    incomeValidation: true,
+                  });
+                }}
+              />
+              <img src={rupees} className="icon" />
+            </div>
+
+            <div className="signup-error-container">
+              {state.incomeValidation && (
+                <p style={{ color: "red" }} className="signup-error">
+                  Invalid income
+                </p>
+              )}
+              {requiredFields.income_per_month && (
+                <p style={{ color: "red" }} className="signup-error">
+                  {" "}
+                  Income is required
+                </p>
+              )}
+            </div>
+
             <Button className="register-button" onClick={handleSubmit}>
               Register
             </Button>
