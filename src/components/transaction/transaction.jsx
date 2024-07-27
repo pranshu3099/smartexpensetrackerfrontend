@@ -90,7 +90,7 @@ const Transaction = ({ onClose }) => {
       };
 
       fetchData(data);
-      setOpenModal(false);
+      onClose();
     }
   };
 
