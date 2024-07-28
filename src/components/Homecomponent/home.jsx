@@ -2,17 +2,21 @@ import { authmethod, userData, bearer } from "../../utils/utils";
 import Transaction from "../transaction/transaction";
 import RecentTransaction from "../transaction/RecentTransaction";
 import { useEffect, useState } from "react";
-import plus from "../../icons/plus-square-svgrepo-com.svg";
 import "./home.css";
+import plus from "../../icons/plus-square-svgrepo-com.svg";
 import down from "../../icons/arrow-bottom-icon.svg";
 import up from "../../icons/arrow-top-icon.svg";
+import analytics from "../../icons/analytics-svgrepo-com.svg";
 import getExpenseData from "../../customhook/useCommonEffect";
 import AllTransaction from "../transaction/AllTransaction";
+import Analytics from "../Analytics/MyAnalytics";
 import { useDisclosure } from "@chakra-ui/react";
 import { Modal, Button } from "@chakra-ui/react";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [AllTransactionModal, setAllTransactionModal] = useState(false);
+  const [seeAnalytics, setseeAnalytics] = useState(false);
+
   const [yourTransaction, SetyourTransaction] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +49,10 @@ const Home = () => {
     onOpen();
     setAllTransactionModal(true);
   };
+  const handleAnalyticsModal = () => {
+    onOpen();
+    setseeAnalytics(true);
+  };
 
   return (
     <>
@@ -61,12 +69,21 @@ const Home = () => {
               <p>2.5</p>
             </div>
           </div>
-          <img
-            src={plus}
-            alt=""
-            className="plus-icon"
-            onClick={handleopenModal}
-          />
+          <div className="analytics-container">
+            <img
+              src={plus}
+              alt=""
+              className="home-icon"
+              onClick={handleopenModal}
+            />
+            <img
+              src={analytics}
+              alt=""
+              className="home-icon"
+              onClick={handleAnalyticsModal}
+            />
+          </div>
+
           <div className="gain-loss-sub-container">
             <img src={up} alt="" style={{ width: "80px" }} />
             <div className="gain-data">
@@ -77,9 +94,16 @@ const Home = () => {
         </div>
 
         <div className="transaction">
-          {!AllTransactionModal && (
+          {!AllTransactionModal && !seeAnalytics && (
             <Modal isOpen={isOpen} onClose={onClose}>
               <Transaction onClose={onClose} />
+            </Modal>
+          )}
+        </div>
+        <div>
+          {seeAnalytics && (
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <Analytics onClose={onClose} setseeAnalytics={setseeAnalytics} />
             </Modal>
           )}
         </div>
