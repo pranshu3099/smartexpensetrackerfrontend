@@ -59,3 +59,49 @@ export const getTimeStamp = (timestamp) => {
 
   return timeString;
 };
+
+export const getMonthAndYear = () => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return { month, year };
+};
+
+export const months = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
+export const GetMonthlyExpenseData = (data) => {
+  if (data.length) {
+    const data_obj = data[0];
+    const { expenses_data } = data_obj;
+    const obj = {};
+    const result = new Array(12).fill(0);
+    expenses_data.forEach((data) => {
+      const { amount, month } = data;
+      if (obj.hasOwnProperty(month)) {
+        const prev_amount = obj[month];
+        const new_amount = Number(amount) + Number(prev_amount);
+        obj[month] = String(new_amount);
+      } else {
+        obj[month] = amount;
+      }
+    });
+
+    for (const key in obj) {
+      result[key] = Number(obj[key]);
+    }
+    return result;
+  }
+};
