@@ -181,7 +181,7 @@ const Transaction = ({ onClose }) => {
                 </div>{" "}
                 <div className="category-icon-sub-container">
                   <img src={education} alt="" />
-                  <p>Eduction</p>
+                  <p>Education</p>
                 </div>{" "}
                 <div className="category-icon-sub-container">
                   <img src={medical} alt="" />
