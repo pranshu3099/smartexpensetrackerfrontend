@@ -82,12 +82,26 @@ export const months = [
   "december",
 ];
 
+export const category_name = [
+  "Investment",
+  "Taxes",
+  "Rent",
+  "Gifts",
+  "Education",
+  "Medical",
+  "Travelling",
+  "Entertainment",
+  "Shopping",
+  "FoodandDining",
+];
+
 export const GetMonthlyExpenseData = (data) => {
   if (data.length) {
     const data_obj = data[0];
     const { expenses_data } = data_obj;
     const obj = {};
-    const result = new Array(12).fill(0);
+    const expense_result = new Array(12).fill(0);
+    const category_result = new Array(10).fill(0);
     expenses_data.forEach((data) => {
       const { amount, month } = data;
       if (obj.hasOwnProperty(month)) {
@@ -97,11 +111,20 @@ export const GetMonthlyExpenseData = (data) => {
       } else {
         obj[month] = amount;
       }
+      let is_first = true;
+      for (const key in data) {
+        if (is_first) {
+          const index = category_name.indexOf(key);
+          category_result[index] = Number(data[key]);
+          is_first = false;
+        }
+      }
     });
 
     for (const key in obj) {
-      result[key] = Number(obj[key]);
+      expense_result[key] = Number(obj[key]);
     }
-    return result;
+
+    return { expense_result, category_result };
   }
 };
