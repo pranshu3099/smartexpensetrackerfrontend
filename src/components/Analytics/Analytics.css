@@ -1,5 +1,9 @@
 .chart-container {
-  /* background-color: aqua; */
-  width: 800px;
   height: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chart-container div {
+  width: 800px;
 }
