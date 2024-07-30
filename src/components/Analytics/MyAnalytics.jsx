@@ -13,27 +13,21 @@ import {
   GetMonthlyExpenseData,
   category_name,
 } from "../../utils/utils";
+import useCommonEffect from "../../customhook/useCommonEffect";
 import "chart.js/auto";
 import "./Analytics.css";
 import { Pie, Bar } from "react-chartjs-2";
-const react_api_url = import.meta.env.VITE_REACT_APP_API_URL;
 const MyAnalytics = ({ onClose, setseeAnalytics }) => {
-  const [analyticsData, setAnalyticsData] = useState([]);
   const [expenseData, setexpenseData] = useState([]);
   const [categoryData, setcategoryData] = useState([]);
+  const { month, year } = getMonthAndYear();
+  const analyticsData = useCommonEffect.fetchAnalyticsData(
+    userData?.id,
+    month,
+    year
+  );
   useEffect(() => {
-    const { month, year } = getMonthAndYear();
-    const fetchData = async () => {
-      const response = await fetch(
-        `${react_api_url}/v1/user/monthly-expenses/${userData?.id}/${year}/${month}`
-      );
-      const result = await response.json();
-      setAnalyticsData(result?.data);
-    };
-    fetchData();
-  }, []);
-  useEffect(() => {
-    if (analyticsData.length > 0) {
+    if (analyticsData?.length > 0) {
       const { expense_result, category_result } =
         GetMonthlyExpenseData(analyticsData);
       setexpenseData(expense_result);

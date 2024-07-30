@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { authmethod, userData, bearer } from "../../utils/utils";
-import getExpenseData from "../../customhook/useCommonEffect";
+import useCommonEffect from "../../customhook/useCommonEffect";
 import Main from "./Main";
 import { css } from "@emotion/react";
 const AllTransaction = ({ onClose, setAllTransactionModal }) => {
@@ -17,7 +17,7 @@ const AllTransaction = ({ onClose, setAllTransactionModal }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getExpenseData(userData?.email);
+        const data = await useCommonEffect.getExpenseData(userData?.email);
         SetyourTransaction(data);
       } catch (err) {
         console.log(err);

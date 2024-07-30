@@ -7,21 +7,24 @@ import plus from "../../icons/plus-square-svgrepo-com.svg";
 import down from "../../icons/arrow-bottom-icon.svg";
 import up from "../../icons/arrow-top-icon.svg";
 import analytics from "../../icons/analytics-svgrepo-com.svg";
-import getExpenseData from "../../customhook/useCommonEffect";
+import useCommonEffect from "../../customhook/useCommonEffect";
 import AllTransaction from "../transaction/AllTransaction";
 import Analytics from "../Analytics/MyAnalytics";
 import { useDisclosure } from "@chakra-ui/react";
 import { Modal, Button } from "@chakra-ui/react";
+import { getMonthAndYear, GetMonthlyExpenseData } from "../../utils/utils";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [AllTransactionModal, setAllTransactionModal] = useState(false);
   const [seeAnalytics, setseeAnalytics] = useState(false);
-
+  const [spending, setSpending] = useState(false);
   const [yourTransaction, SetyourTransaction] = useState([]);
+  const { month, year } = getMonthAndYear();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getExpenseData(userData?.email);
+        const data = await useCommonEffect.getExpenseData(userData?.email);
         SetyourTransaction(data);
       } catch (err) {
         console.log(err);
@@ -29,6 +32,19 @@ const Home = () => {
     };
     fetchData();
   }, [userData?.email]);
+
+  const analyticsData = useCommonEffect.fetchAnalyticsData(
+    userData?.id,
+    month,
+    year
+  );
+
+  useEffect(() => {
+    if (analyticsData?.length > 0) {
+      const { total_spending } = GetMonthlyExpenseData(analyticsData);
+      setSpending(total_spending);
+    }
+  }, [analyticsData]);
 
   const getTimeofDay = () => {
     const now = new Date();
@@ -66,7 +82,7 @@ const Home = () => {
             <img src={down} alt="" style={{ width: "80px" }} />
             <div className="spend-data">
               <p>Spending</p>
-              <p>2.5</p>
+              <p>{spending}</p>
             </div>
           </div>
           <div className="analytics-container">
