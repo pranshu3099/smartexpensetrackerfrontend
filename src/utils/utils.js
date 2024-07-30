@@ -102,6 +102,7 @@ export const GetMonthlyExpenseData = (data) => {
     const obj = {};
     const expense_result = new Array(12).fill(0);
     const category_result = new Array(10).fill(0);
+    let total_spending = 0;
     expenses_data.forEach((data) => {
       const { amount, month } = data;
       if (obj.hasOwnProperty(month)) {
@@ -116,6 +117,7 @@ export const GetMonthlyExpenseData = (data) => {
         if (is_first) {
           const index = category_name.indexOf(key);
           category_result[index] = Number(data[key]);
+          total_spending = total_spending + Number(data[key]);
           is_first = false;
         }
       }
@@ -125,6 +127,6 @@ export const GetMonthlyExpenseData = (data) => {
       expense_result[key] = Number(obj[key]);
     }
 
-    return { expense_result, category_result };
+    return { expense_result, category_result, total_spending };
   }
 };
